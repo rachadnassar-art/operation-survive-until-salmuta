@@ -75,12 +75,36 @@ body {
 
 /* ============ HERO ============ */
 #hero {
-  background: linear-gradient(160deg, #1a0a12 0%, #2d1020 50%, #1a1a2e 100%);
+  position: relative;
   color: white;
   padding: 6rem 2rem 5rem;
   text-align: center;
+  overflow: hidden;
 }
-.hero-inner { max-width: 680px; margin: 0 auto; }
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
+  transform: scale(1.03);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 5, 10, 0.55) 0%,
+    rgba(20, 5, 15, 0.72) 50%,
+    rgba(10, 5, 20, 0.85) 100%
+  );
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
 
 .hero-tag {
   font-size: 0.78rem;
@@ -344,16 +368,25 @@ section {
 .sl-critical { color: var(--rose); }
 
 /* Badges */
-.badges-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.badges-grid { display: flex; flex-direction: column; gap: 0.6rem; }
+.badge-wrap { display: flex; flex-direction: column; gap: 0.2rem; }
 .badge-pill {
-  font-size: 0.75rem;
-  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.8rem;
   border-radius: 20px;
   font-weight: 500;
   border: 1px solid;
+  display: inline-block;
+  width: fit-content;
 }
 .badge-pill.unlocked { background: var(--gold-light); color: #a06010; border-color: var(--gold); }
 .badge-pill.locked { background: var(--bg-alt); color: var(--text-light); border-color: var(--border); }
+.badge-hint {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  padding-left: 0.3rem;
+  font-style: italic;
+}
 
 /* ============ JOURNEY MAP ============ */
 #journey { max-width: 100%; background: white; padding: 4rem 2rem; }
@@ -504,6 +537,10 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.2rem;
+}
+.more-grid--single {
+  grid-template-columns: 1fr;
+  max-width: 640px;
 }
 
 .more-card {

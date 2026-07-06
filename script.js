@@ -36,14 +36,14 @@ function updateJourney() {
 
 /* ---------- DATE GENERATOR ---------- */
 const dates = [
-  "Cook Japanese comfort food together",
-  "Movie night: loser writes dramatic review",
+  "Movie night — drawing straws, loser writes dramatic review",
+  "Game night",
+  "Cooking time together",
+  "Deep talk",
   "Sunset exchange challenge — each send a photo at golden hour",
-  "Wingspan tournament (online)",
-  "Plan your first reunion weekend in detail",
-  "Music swap challenge — make each other a 5-song playlist",
-  "Online board game night",
-  "Show each other one place nearby you love"
+  "Music swap challenge — make each other a 5-song playlist and sing along!",
+  "Plan our first reunion weekend",
+  "Show each other one place nearby we love"
 ];
 
 function generateDate() {
@@ -53,11 +53,12 @@ function generateDate() {
 
 /* ---------- QUESTION GENERATOR ---------- */
 const questions = [
-  "What is one thing we do better than most couples?",
-  "What would our ideal weekend look like?",
   "What memory from Japan do you revisit most often?",
-  "What should we learn together next year?",
-  "What is something you've changed your mind about recently?"
+  "What should we do together this year?",
+  "What is something you've changed your mind about recently?",
+  "Where do we see ourselves in a year?",
+  "What does your ideal weekend look like?",
+  "What is one thing we do worse than other couples?"
 ];
 
 function generateQuestion() {
@@ -67,11 +68,11 @@ function generateQuestion() {
 
 /* ---------- BUCKET LIST (localStorage) ---------- */
 const bucket = [
-  "Breakfast date",
-  "Japanese restaurant",
   "Sunset on the lake",
-  "Volleyball together",
-  "Weekend getaway"
+  "Hike in the mountains",
+  "Drive in Cairo",
+  "Dhow cruise in Lamu",
+  "Heightened security brunch in Westlands"
 ];
 
 const BUCKET_KEY = "ousm_bucket";
@@ -112,13 +113,12 @@ const XP_KEY  = "ousm_xp";
 const XP_GOAL = 500;
 
 const badgeDefs = [
-  { label: "Survived One Week",              threshold: 1   },
-  { label: "Only One Continent Apart",       threshold: 50  },
-  { label: "Emergency Hug Request Submitted",threshold: 100 },
-  { label: "Volleyball Correspondent",       threshold: 150 },
-  { label: "Salma Watches Producer",         threshold: 200 },
-  { label: "UN Compliance Officer",          threshold: 300 },
-  { label: "Mission Completed",              threshold: XP_GOAL }
+  { label: "Survived One Week",               threshold: 1,   hint: "Awarded automatically — you made it this far" },
+  { label: "Only One Continent Apart",        threshold: 50,  hint: "Earn 50 XP — try a video call (+20) and a deep question (+25)" },
+  { label: "Emergency Hug Request Submitted", threshold: 100, hint: "Earn 100 XP — a date night (+50) gets you halfway there" },
+  { label: "Volleyball Correspondent",        threshold: 150, hint: "Earn 150 XP — keep logging volleyball updates (+30) and surprise photos (+35)" },
+  { label: "Bucket List Pioneer",             threshold: 200, hint: "Earn 200 XP — stack a date night, deep question, and video call" },
+  { label: "Mission Completed",               threshold: XP_GOAL, hint: "Reach 500 XP — the final badge, earned together" }
 ];
 
 function getXP() {
@@ -153,10 +153,21 @@ function renderBadges(xp) {
   grid.innerHTML = "";
   badgeDefs.forEach(b => {
     const unlocked = xp >= b.threshold;
+    const wrap = document.createElement("div");
+    wrap.className = "badge-wrap";
+
     const pill = document.createElement("span");
     pill.className = "badge-pill " + (unlocked ? "unlocked" : "locked");
     pill.textContent = (unlocked ? "✓ " : "🔒 ") + b.label;
-    grid.appendChild(pill);
+    wrap.appendChild(pill);
+
+    if (!unlocked) {
+      const hint = document.createElement("span");
+      hint.className = "badge-hint";
+      hint.textContent = b.hint;
+      wrap.appendChild(hint);
+    }
+    grid.appendChild(wrap);
   });
 }
 
