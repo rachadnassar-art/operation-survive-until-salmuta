@@ -3,252 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operation: Survive Until Salmuta</title>
+<title>Operation: Survive Until Salmuta ❤️</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="grain"></div>
-
-<!-- ============ CLASSIFICATION BAR ============ -->
-<div class="classified-bar">
-  <span>TOP SECRET</span><span class="dot">•</span><span>EYES ONLY: R &amp; S</span><span class="dot">•</span><span>FILE NO. 0618-EVN-CAI</span>
-</div>
-
-<!-- ============ HERO ============ -->
-<section id="hero">
-  <div class="case-stamp">CASE FILE OPEN</div>
-  <p class="eyebrow">Highly Unofficial UN Mission</p>
-  <h1>Operation: Survive<br>Until Salmuta <span class="heart">❤️</span></h1>
-  <p class="hero-sub">Filed under: separations that were never approved by anyone, least of all us.</p>
-
-  <div id="countdown">
-    <div class="big-number" id="daysLeft">--</div>
-    <div class="big-label">Days Until Hugs</div>
+<!-- NAV -->
+<nav class="topnav">
+  <span class="nav-brand">Operation: Survive Until Salmuta ❤️</span>
+  <div class="nav-links">
+    <a href="#dashboard">Dashboard</a>
+    <a href="#journey">Journey</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#more">More</a>
   </div>
+</nav>
 
-  <div class="status-card">
-    <h3><span class="stamp-icon">▣</span> Mission Status</h3>
-    <ul>
-      <li><span>Days survived</span><span id="daysSurvived" class="status-value">--</span></li>
-      <li><span>Hug deficit</span><span class="status-value critical">Critical</span></li>
-      <li><span>UN compliance</span><span class="status-value critical">0%</span></li>
-      <li><span>Recommended action</span><span class="status-value">Immediate reunification</span></li>
-    </ul>
+<!-- HERO -->
+<header id="hero">
+  <div class="hero-inner">
+    <p class="hero-tag">Highly unofficial UN mission · File 0618-EVN-CAI</p>
+    <h1>Survive Until<br><em>Salmuta</em></h1>
+    <p class="hero-sub">Filed under: separations that were never approved by anyone, least of all us.</p>
+    <div class="hero-countdown">
+      <div class="hc-block">
+        <span class="hc-num" id="daysLeft">--</span>
+        <span class="hc-label">days to go</span>
+      </div>
+      <div class="hc-divider"></div>
+      <div class="hc-block">
+        <span class="hc-num" id="daysSurvived">--</span>
+        <span class="hc-label">days survived</span>
+      </div>
+      <div class="hc-divider"></div>
+      <div class="hc-block">
+        <span class="hc-num" id="pctDone">--%</span>
+        <span class="hc-label">of mission done</span>
+      </div>
+    </div>
+    <a href="#dashboard" class="hero-cta">Open dashboard ↓</a>
   </div>
+</header>
 
-  <div class="scroll-cue">Mission briefing below ↓</div>
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <div class="section-label">Dashboard</div>
+  <div class="dash-grid">
+
+    <!-- XP Card -->
+    <div class="dash-card dash-card--wide">
+      <div class="card-header">
+        <h2>Mission XP</h2>
+        <span class="card-badge" id="xpBadge">0 XP</span>
+      </div>
+      <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarFill"></div></div>
+      <p class="xp-goal-label">Goal: 500 XP to unlock Mission Complete</p>
+      <div class="xp-chips">
+        <button class="xp-chip" onclick="addXP(20,'Video call')"><span class="chip-label">Video call</span><span class="chip-pts">+20</span></button>
+        <button class="xp-chip" onclick="addXP(50,'Date night')"><span class="chip-label">Date night</span><span class="chip-pts">+50</span></button>
+        <button class="xp-chip" onclick="addXP(30,'Volleyball update')"><span class="chip-label">Volleyball update</span><span class="chip-pts">+30</span></button>
+        <button class="xp-chip" onclick="addXP(40,'Salma Watches ep.')"><span class="chip-label">Salma Watches ep.</span><span class="chip-pts">+40</span></button>
+        <button class="xp-chip" onclick="addXP(25,'Deep question')"><span class="chip-label">Deep question</span><span class="chip-pts">+25</span></button>
+        <button class="xp-chip" onclick="addXP(35,'Surprise photo')"><span class="chip-label">Surprise photo</span><span class="chip-pts">+35</span></button>
+      </div>
+      <div id="xpToast" class="xp-toast hidden"></div>
+    </div>
+
+    <!-- Bucket List Card -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h2>Bucket List</h2>
+        <span class="card-badge" id="bucketBadge">0 / 5</span>
+      </div>
+      <ul class="bucket-list" id="bucketGrid"></ul>
+    </div>
+
+    <!-- Date Generator Card -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h2>Tonight's Date</h2>
+      </div>
+      <p class="card-sub">Can't be in the same city. Can still have a date.</p>
+      <button class="btn-action" onclick="generateDate()">Generate a date idea</button>
+      <div id="dateResult" class="gen-result"></div>
+    </div>
+
+    <!-- Question Card -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h2>One Question</h2>
+      </div>
+      <p class="card-sub">Pull a question. Answer it honestly on a call tonight.</p>
+      <button class="btn-action" onclick="generateQuestion()">Pull a question</button>
+      <div id="question" class="gen-result"></div>
+    </div>
+
+    <!-- Mission Status Card -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h2>Mission Status</h2>
+      </div>
+      <ul class="status-list">
+        <li><span class="sl-label">Hug deficit</span><span class="sl-value sl-critical">Critical</span></li>
+        <li><span class="sl-label">UN compliance</span><span class="sl-value sl-critical">0%</span></li>
+        <li><span class="sl-label">Recommended action</span><span class="sl-value">Immediate reunification</span></li>
+        <li><span class="sl-label">Target date</span><span class="sl-value">14 August 2026</span></li>
+      </ul>
+    </div>
+
+    <!-- Badges Card -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h2>Badges</h2>
+      </div>
+      <div class="badges-grid" id="badgesGrid"></div>
+    </div>
+
+  </div>
 </section>
 
-<!-- ============ JOURNEY MAP (signature element) ============ -->
+<!-- JOURNEY MAP -->
 <section id="journey">
-  <p class="eyebrow center">Route Surveillance</p>
-  <h2>The Long Way Back to Each Other</h2>
-  <p class="section-sub">Two agents. One continent-sized inconvenience. Track their approach in real time.</p>
+  <div class="section-label">The Journey</div>
+  <h2 class="section-title">The Long Way Back to Each Other</h2>
+  <p class="section-sub">Two agents. One continent-sized inconvenience.</p>
 
-  <div class="journey-track-wrap">
+  <div class="journey-wrap">
     <div class="journey-track">
-      <div class="track-line"></div>
-      <div class="track-line-fill" id="trackFill"></div>
-
-      <div class="agent agent-left" id="rachdouda">
-        <img src="rachdouda.png" alt="Rachdouda">
-        <span class="agent-label">RACHDOUDA</span>
+      <!-- left agent -->
+      <div class="j-agent j-agent--left" id="rachdouda">
+        <img src="assets/rachdouda.png" alt="Rachdouda">
+        <span class="j-name">Rachdouda</span>
       </div>
 
-      <div class="waypoints">
-        <div class="waypoint" data-city="Evian"><span class="wp-dot"></span><span class="wp-label">Evian</span></div>
-        <div class="waypoint" data-city="St Disdille"><span class="wp-dot"></span><span class="wp-label">St Disdille</span></div>
-        <div class="waypoint" data-city="Excenevex"><span class="wp-dot"></span><span class="wp-label">Excenevex</span></div>
-        <div class="waypoint" data-city="Tokyo"><span class="wp-dot"></span><span class="wp-label">Tokyo</span></div>
-        <div class="waypoint" data-city="Nairobi"><span class="wp-dot"></span><span class="wp-label">Nairobi</span></div>
-        <div class="waypoint" data-city="Cairo"><span class="wp-dot"></span><span class="wp-label">Cairo</span></div>
+      <!-- track -->
+      <div class="j-line-wrap">
+        <div class="j-line-bg"></div>
+        <div class="j-line-fill" id="trackFill"></div>
+        <div class="j-marker" id="progressMarker">❤️</div>
+        <div class="j-cities">
+          <span>Evian</span>
+          <span>St Disdille</span>
+          <span>Excenevex</span>
+          <span>Tokyo</span>
+          <span>Nairobi</span>
+          <span>Cairo</span>
+        </div>
       </div>
 
-      <div class="agent agent-right" id="salmuta">
-        <img src="salmuta.png" alt="Salmuta">
-        <span class="agent-label">SALMUTA</span>
+      <!-- right agent -->
+      <div class="j-agent j-agent--right" id="salmuta">
+        <img src="assets/salmuta.png" alt="Salmuta">
+        <span class="j-name">Salmuta</span>
       </div>
+    </div>
+  </div>
 
-      <div class="reunion-marker">❤️</div>
+  <!-- Vertical timeline below map -->
+  <div class="timeline-wrap" id="timeline">
+    <div class="tl-item completed">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">18 June</span>
+        <h3>Departure Disaster</h3>
+        <p>The Great Separation officially began. Nobody approved this mission.</p>
+      </div>
+    </div>
+    <div class="tl-item current">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">27–28 June</span>
+        <h3>St Disdille Tournament</h3>
+        <p>Volleyball Correspondent Mission: one video, one funny quote, one sweaty selfie.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">4–5 July</span>
+        <h3>Excenevex Tournament</h3>
+        <p>Second deployment to the sand courts. Correspondent duties continue.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">5–6 July</span>
+        <h3>Tokyo → Nairobi</h3>
+        <p>Long-haul repositioning. Status: airborne, unreachable, missed anyway.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">29 July</span>
+        <h3>Salmuta Deploys to Cairo</h3>
+        <p>Final staging point before reunification window opens.</p>
+      </div>
+    </div>
+    <div class="tl-item final">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <span class="tl-date">14 August</span>
+        <h3>Airport Pickup ❤️</h3>
+        <p>Separation defeated. Proceed to excessive hugging.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ TIMELINE ============ -->
-<section id="timeline">
-  <p class="eyebrow center">Mission Timeline</p>
-  <h2>Operational Log</h2>
+<!-- MORE -->
+<section id="more">
+  <div class="section-label">More</div>
+  <div class="more-grid">
 
-  <div class="timeline-list">
-    <div class="milestone completed">
-      <span class="m-date">18 June</span>
-      <h3>Departure Disaster</h3>
-      <p>The Great Separation officially began. Nobody approved this mission.</p>
+    <!-- Salma Watches -->
+    <div class="more-card">
+      <h2>Salma Watches</h2>
+      <p class="card-sub">Episodic dispatches from the road.</p>
+      <div class="episodes">
+        <div class="episode"><span class="ep-num">EP 01</span><span>Lost in Tokyo</span></div>
+        <div class="episode"><span class="ep-num">EP 02</span><span>Swiss Volleyball People Are Very Tall</span></div>
+        <div class="episode"><span class="ep-num">EP 03</span><span>Alps But Make It Romantic</span></div>
+      </div>
     </div>
-    <div class="milestone current">
-      <span class="m-date">27&ndash;28 June</span>
-      <h3>St Disdille Tournament</h3>
-      <p>Volleyball Correspondent Mission: send one video, one funny quote, one sweaty selfie.</p>
+
+    <!-- UN Report -->
+    <div class="more-card un-card">
+      <div class="un-stamp">RESOLUTION ADOPTED</div>
+      <h2>UN Situation Report</h2>
+      <div class="un-rows">
+        <div class="un-row"><span>Separation crisis level</span><strong class="un-severe">SEVERE</strong></div>
+        <div class="un-row"><span>Humanitarian need</span><strong>1 hug (urgent)</strong></div>
+        <div class="un-row"><span>Stakeholder outcome</span><strong>Both parties agree this sucks.</strong></div>
+        <div class="un-row"><span>Recommended action</span><strong>Airport pickup, 14 August.</strong></div>
+      </div>
+      <p class="resolution-text">The Security Council recognizes that the continued separation of Rachdouda and Salmuta is no longer necessary and <strong>authorizes immediate hugging.</strong></p>
     </div>
-    <div class="milestone">
-      <span class="m-date">4&ndash;5 July</span>
-      <h3>Excenevex Tournament</h3>
-      <p>Second deployment to the sand courts. Correspondent duties continue.</p>
-    </div>
-    <div class="milestone">
-      <span class="m-date">5&ndash;6 July</span>
-      <h3>Tokyo → Nairobi</h3>
-      <p>Long-haul repositioning. Status: airborne, unreachable, missed anyway.</p>
-    </div>
-    <div class="milestone">
-      <span class="m-date">29 July</span>
-      <h3>Salmuta Deploys to Cairo</h3>
-      <p>Final staging point before reunification window opens.</p>
-    </div>
-    <div class="milestone final">
-      <span class="m-date">14 August</span>
-      <h3>Airport Pickup <span class="heart">❤️</span></h3>
-      <p>Separation defeated. Proceed to excessive hugging.</p>
-    </div>
+
   </div>
 </section>
 
-<!-- ============ DATE GENERATOR ============ -->
-<section id="date-generator" class="panel-section">
-  <p class="eyebrow center">Field Exercise</p>
-  <h2>Tonight's Assignment</h2>
-  <p class="section-sub">Can't be together. Can still have a date. Generate tonight's mission.</p>
-
-  <div class="generator-card">
-    <button class="btn-primary" onclick="generateDate()">Generate Tonight's Date</button>
-    <div id="dateResult" class="generator-result">Awaiting orders...</div>
-  </div>
-</section>
-
-<!-- ============ DEEP QUESTION GENERATOR ============ -->
-<section id="question-generator" class="panel-section">
-  <p class="eyebrow center">Stakeholder Consultation</p>
-  <h2>One Question, Honestly Answered</h2>
-  <p class="section-sub">Pull a question. Answer it on a call tonight. No skipping.</p>
-
-  <div class="generator-card">
-    <button class="btn-primary" onclick="generateQuestion()">Pull a Question</button>
-    <div id="question" class="generator-result">Awaiting orders...</div>
-  </div>
-</section>
-
-<!-- ============ SALMA WATCHES ============ -->
-<section id="salma-watches">
-  <p class="eyebrow center">Field Reports</p>
-  <h2>Salma Watches</h2>
-  <p class="section-sub">Episodic dispatches from the road.</p>
-
-  <div class="episode-grid">
-    <div class="episode">
-      <span class="ep-number">EP. 01</span>
-      <h3>Lost in Tokyo</h3>
-    </div>
-    <div class="episode">
-      <span class="ep-number">EP. 02</span>
-      <h3>Swiss Volleyball People Are Very Tall</h3>
-    </div>
-    <div class="episode">
-      <span class="ep-number">EP. 03</span>
-      <h3>Alps But Make It Romantic</h3>
-    </div>
-  </div>
-</section>
-
-<!-- ============ XP / MISSION PROGRESS ============ -->
-<section id="xp-section" class="panel-section">
-  <p class="eyebrow center">Mission Points</p>
-  <h2>Earn Your Hugs</h2>
-  <p class="section-sub">Log an activity, earn XP, watch the mission bar fill.</p>
-
-  <div class="xp-bar-wrap">
-    <div class="xp-bar-label"><span id="xpLabel">0 XP</span></div>
-    <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarFill"></div></div>
-  </div>
-
-  <div class="xp-grid">
-    <button class="xp-chip" onclick="addXP(20,'Video call')">Video call <span>+20</span></button>
-    <button class="xp-chip" onclick="addXP(50,'Date night')">Date night <span>+50</span></button>
-    <button class="xp-chip" onclick="addXP(30,'Volleyball update')">Volleyball update <span>+30</span></button>
-    <button class="xp-chip" onclick="addXP(40,'Salma Watches episode')">Salma Watches episode <span>+40</span></button>
-    <button class="xp-chip" onclick="addXP(25,'Deep question')">Deep question <span>+25</span></button>
-    <button class="xp-chip" onclick="addXP(35,'Surprise photo')">Surprise photo <span>+35</span></button>
-  </div>
-
-  <div id="xpLog" class="xp-log"></div>
-
-  <div class="badges-wrap">
-    <h3>Badges Unlocked</h3>
-    <div class="badges-grid" id="badgesGrid"></div>
-  </div>
-</section>
-
-<!-- ============ BUCKET LIST ============ -->
-<section id="bucket-list">
-  <p class="eyebrow center">Pending Objectives</p>
-  <h2>The Bucket List</h2>
-  <p class="section-sub">Tap one off when it's done.</p>
-
-  <ul class="bucket-grid" id="bucketGrid"></ul>
-</section>
-
-<!-- ============ UN SITUATION REPORT ============ -->
-<section id="un-report">
-  <div class="un-panel">
-    <div class="un-header">
-      <span class="un-seal">🕊</span>
-      <h2>UN Relationship Situation Report</h2>
-    </div>
-    <div class="un-row">
-      <span class="un-label">Current Separation Crisis Level</span>
-      <span class="un-value severe">SEVERE</span>
-    </div>
-    <div class="un-row">
-      <span class="un-label">Humanitarian Need</span>
-      <span class="un-value">1 hug (urgent)</span>
-    </div>
-    <div class="un-row">
-      <span class="un-label">Stakeholder Consultation Outcome</span>
-      <span class="un-value">Both parties agree this sucks.</span>
-    </div>
-    <div class="un-row">
-      <span class="un-label">Recommended Intervention</span>
-      <span class="un-value">Airport pickup on 14 August.</span>
-    </div>
-
-    <div class="resolution">
-      <div class="resolution-stamp">RESOLUTION ADOPTED</div>
-      <p class="resolution-body">
-        The Security Council,<br>
-        Recalling all previous resolutions concerning Operation Survive Until Salmuta,<br>
-        Recognizing that the continued separation of Rachdouda and Salmuta is no longer necessary,<br>
-        <strong>Authorizes immediate hugging.</strong>
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ REUNION OVERLAY (hidden until reunion date) ============ -->
+<!-- REUNION OVERLAY -->
 <div id="reunionOverlay" class="reunion-overlay hidden">
-  <div class="reunion-content">
-    <div class="reunion-title">MISSION COMPLETE</div>
+  <div class="reunion-box">
+    <div class="reunion-emoji">❤️</div>
+    <div class="reunion-title">Mission Complete</div>
     <div class="reunion-sub">Separation Defeated</div>
-    <div class="reunion-cta">Proceed To Excessive Hugging</div>
+    <p>Proceed to excessive hugging.</p>
   </div>
 </div>
-
 <canvas id="confettiCanvas"></canvas>
 
 <footer>
-  <p>Filed by the Department of Long Distance Affairs &nbsp;•&nbsp; This document will self-destruct on 14 August (in the best way)</p>
+  <p>Filed by the Department of Long Distance Affairs · Self-destructs 14 August (in the best way)</p>
 </footer>
 
 <script src="script.js"></script>
